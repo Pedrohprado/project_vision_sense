@@ -5,6 +5,8 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   HOST: z.string().default('127.0.0.1'),
   PORT: z.string().default('3333'),
+  TOPIC: z.string(),
+  MQTT_CONNECT: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);

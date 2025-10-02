@@ -1,7 +1,9 @@
 import { connect } from 'mqtt';
 import { PrismaClient } from '@prisma/client';
+import { env } from '../env';
 
 const prisma = new PrismaClient();
+const client = connect(env.MQTT_CONNECT);
 
 const devicesCache = new Map<string, string>();
 let buffer: { deviceId: string; value: number }[] = [];
@@ -38,10 +40,9 @@ async function loadDevices() {
   console.log(devices);
 }
 
-const client = connect('mqtt://mqtt.eclipseprojects.io:1883');
-
 client.on('connect', () => {
-  client.subscribe('device_vision_sensor/+', (error) => {
+  console.log('teste');
+  client.subscribe(env.TOPIC, (error) => {
     console.error(error);
   });
 });
@@ -51,7 +52,7 @@ client.on('message', async (topic, payload) => {
     const [, uuid] = topic.split('/');
     const data = payload.toString();
 
-    console.log(data);
+    console.log('oi', data);
 
     const deviceId = devicesCache.get(uuid);
 

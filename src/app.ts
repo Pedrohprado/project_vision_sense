@@ -1,6 +1,7 @@
 import fastify from 'fastify';
 import { readingsRoutes } from './routes/readings';
 import prisma from './plugins/prisma';
+import './services/mqtt';
 
 export const app = fastify();
 
