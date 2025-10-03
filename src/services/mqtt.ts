@@ -7,7 +7,6 @@ const prisma = new PrismaClient();
 const client = connect(env.MQTT_CONNECT);
 
 const devicesCache = new Map<string, string>();
-let buffer: { topic: string; value: number }[] = [];
 const topics: Set<string> = new Set();
 
 function getRisk(value: number): 'HIGH' | 'MEDIUM' | 'LOW' {
@@ -25,11 +24,10 @@ async function loadDevices() {
 
   devices.forEach((device) => devicesCache.set(device.key, device.key));
 
-  console.log(devices);
+  console.log('dispositivos encontrados', devices);
 }
 
 client.on('connect', () => {
-  console.log('teste');
   client.subscribe(env.TOPIC, (error) => {
     console.error(error);
   });
@@ -37,16 +35,15 @@ client.on('connect', () => {
 
 client.on('message', async (topic, payload) => {
   try {
-    // const [, uuid] = topic.split('/');
+    const [, uuid] = topic.split('/');
     const data = payload.toString();
-    console.log(topic);
-    console.log('oi', data);
-    // const deviceId = devicesCache.get(uuid);
+    console.log(topic, uuid, data);
+    const deviceId = devicesCache.get(uuid); // verifc
 
-    // if (!deviceId) return console.warn(`Device ${uuid} - is not found in list`);
+    if (!deviceId) return console.warn(` ${topic} - is not found in list`);
 
-    topics.add(topic);
-    await redis.lpush(topic, data);
+    topics.add(deviceId);
+    await redis.lpush(deviceId, data);
   } catch (error) {
     console.error('Error in process mensage MQTT', error);
   }
