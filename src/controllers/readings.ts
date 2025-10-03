@@ -1,9 +1,8 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { FastifyRequest } from 'fastify';
 import { app } from '../app';
 
 export async function getReadingsById(
-  request: FastifyRequest<{ Params: { deviceId: string } }>,
-  reply: FastifyReply
+  request: FastifyRequest<{ Params: { deviceId: string } }>
 ) {
   const { deviceId } = request.params;
 

@@ -7,6 +7,7 @@ const envSchema = z.object({
   PORT: z.string().default('3333'),
   TOPIC: z.string(),
   MQTT_CONNECT: z.string(),
+  SECRET_KEY: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);
