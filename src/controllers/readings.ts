@@ -6,13 +6,13 @@ export async function getReadingsById(
 ) {
   const { deviceId } = request.params;
 
-  const data = await app.prisma.dataReadings.findMany({
-    where: {
-      deviceId,
-    },
+  const listReadings = await app.prisma.dataReadings.findMany({
+    where: { deviceId },
+    orderBy: { createdAt: 'desc' },
+    take: 200,
   });
 
-  const listReadings = data.slice(-200);
+  listReadings.reverse();
 
   return { listReadings };
 }
