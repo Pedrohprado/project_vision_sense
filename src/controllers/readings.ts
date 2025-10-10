@@ -6,10 +6,13 @@ export async function getReadingsById(
 ) {
   const { deviceId } = request.params;
 
-  const listReadings = await app.prisma.dataReadings.findMany({
+  const data = await app.prisma.dataReadings.findMany({
     where: {
       deviceId,
     },
   });
+
+  const listReadings = data.slice(-200);
+
   return { listReadings };
 }

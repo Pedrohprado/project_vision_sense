@@ -9,8 +9,8 @@ const devicesCache = new Map<string, string>();
 let buffer: { deviceId: string; value: number; createdAt: string }[] = [];
 
 function getRisk(value: number): 'HIGH' | 'MEDIUM' | 'LOW' {
-  if (value < 300) return 'HIGH';
-  if (value < 500) return 'MEDIUM';
+  if (value < 500) return 'HIGH';
+  if (value < 700) return 'MEDIUM';
   return 'LOW';
 }
 
@@ -75,6 +75,6 @@ client.on('message', async (topic, payload) => {
 });
 
 setInterval(sendDataBufferToDb, 5000);
-setInterval(loadDevices, 60000);
+setInterval(loadDevices, 30000);
 
 loadDevices();
