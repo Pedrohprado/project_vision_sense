@@ -15,16 +15,16 @@ enum RiskCategory {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  age       String
-  height    Float
-  weight    Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Device    Device[]
+  id              String   @id @default(uuid())
+  email           String   @unique
+  hashed_password String
+  name            String
+  age             String
+  height          Float
+  weight          Float
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  Device          Device[]
 }
 
 model Device {
