@@ -22,7 +22,10 @@ export async function login(
   if (!existingUser)
     return reply.status(404).send({ message: 'Usuário não encontrado' });
 
-  const isValidUser = await bcrypt.compare(password, existingUser.password);
+  const isValidUser = await bcrypt.compare(
+    password,
+    existingUser.hashed_password
+  );
 
   if (!isValidUser)
     return reply.status(401).send({ message: 'Email e/ou senha inválido' });
@@ -73,7 +76,7 @@ export async function createUser(
     await app.prisma.user.create({
       data: {
         email,
-        password: hashed,
+        hashed_password: hashed,
         name,
         age,
         height,
