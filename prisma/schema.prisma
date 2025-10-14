@@ -19,9 +19,6 @@ model User {
   email           String   @unique
   hashed_password String
   name            String
-  age             String
-  height          Float
-  weight          Float
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
   Device          Device[]
