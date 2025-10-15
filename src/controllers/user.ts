@@ -49,15 +49,12 @@ export async function createUser(
       email: string;
       password: string;
       name: string;
-      age: string;
-      height: number;
-      weight: number;
     };
   }>,
   reply: FastifyReply
 ) {
   try {
-    const { email, password, name, age, height, weight } = request.body;
+    const { email, password, name } = request.body;
 
     console.log(email);
     const existingUser = await app.prisma.user.findUnique({
@@ -73,20 +70,30 @@ export async function createUser(
 
     const hashed = await bcrypt.hash(password, 10);
 
-    await app.prisma.user.create({
+    const user = await app.prisma.user.create({
       data: {
         email,
         hashed_password: hashed,
         name,
-        age,
-        height,
-        weight,
       },
     });
 
-    return reply.status(201).send();
+    const token = reply.server.jwt.sign(
+      {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      },
+      { expiresIn: '10d' }
+    );
+
+    return reply.status(201).send({
+      name: user.name,
+      email: user.email,
+      token,
+    });
   } catch (error) {
-    console.error('Erro ao criar usuário');
+    console.log(error);
     return reply.status(500).send({
       message: 'Erro ao criar usuário',
     });
