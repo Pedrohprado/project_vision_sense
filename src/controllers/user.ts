@@ -40,6 +40,8 @@ export async function login(
 
   return {
     token,
+    email: existingUser.email,
+    name: existingUser.name,
   };
 }
 
@@ -55,7 +57,6 @@ export async function createUser(
 ) {
   try {
     const { email, password, name } = request.body;
-
     console.log(email);
     const existingUser = await app.prisma.user.findUnique({
       where: {

@@ -14,5 +14,21 @@ export async function getReadingsById(
 
   listReadings.reverse();
 
-  return { listReadings };
+  let low = 0;
+  let medium = 0;
+  let high = 0;
+  listReadings.map((reading) => {
+    reading.danger === 'LOW'
+      ? low + 1
+      : reading.danger === 'MEDIUM'
+      ? medium + 1
+      : high + 1;
+  });
+
+  const porcent = {
+    porcentLow: (low * 100) / listReadings.length,
+    porcentMedium: (medium * 100) / listReadings.length,
+    porcentHigh: (high * 100) / listReadings.length,
+  };
+  return { listReadings, porcent };
 }
