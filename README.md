@@ -1,9 +1,13 @@
 #### Como rodar o back-end
 
 1- Banco postgresql instalado na máquina + pgadmin
+
 2- Abrir o PGAdmin e criar um novo banco de dados chamado: vision_sense
+
 3- Clonar o repositório no github: git clone https://github.com/Pedrohprado/project_vision_sense.git
+
 4- Instalar as dependências: npm install
+
 5- Crie um arquivo .env no projeto e copie o que está em .env.example -> .env
 
 6- vamos mudar o DATABASE_URL:
