@@ -16,12 +16,15 @@ postgresql://username:yourpassword@localhost:5432/your_db?schema=public"
 ![alt text](image.png)
 
 7- rodar os comando do prisma:
+
 7.1 - npx prisma generate -> vai fazer o código entender os models criados;
+
 7.2 - npx prisma migrate dev -> vai colocar os models no banco de dados;
 
 8 - Buildar a aplicação: npm run build
 
 9 - criar um user e um device na mão: #nemtudosãoflores 🥀
+
 9.1 - abra o INSOMNIA(tem que instalar no pc):
 ![alt text](image-1.png)
 
